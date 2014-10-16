@@ -27,8 +27,13 @@ func loadPage(title string) (*Page, error) {
 
 func viewHandler(w http.ResponseWriter, r *http.Request) {
 	title := r.URL.Path[len("/view/"):]
-	p, _ := loadPage(title)
-	fmt.Fprintf(w, "<h1>%s</h1><div>%s</div>", p.Title, p.Body)
+	p, err := loadPage(title)
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+		fmt.Fprint(w, "404: Page not found.")
+	} else {
+		fmt.Fprintf(w, "<h1>%s</h1><div>%s</div>", p.Title, p.Body)
+	}
 }
 
 func main() {
