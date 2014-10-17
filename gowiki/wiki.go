@@ -31,10 +31,9 @@ func viewHandler(w http.ResponseWriter, r *http.Request) {
 	p, err := loadPage(title)
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
-		fmt.Fprint(w, "404: Page not found.")
+		fmt.Fprint(w, "404 page not found")
 	} else {
-		t, _ := template.ParseFiles("view.html")
-		t.Execute(w, p)
+		renderTemplate(w, "view", p)
 	}
 }
 
@@ -44,7 +43,11 @@ func editHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		p = &Page{Title: title}
 	}
-	t, _ := template.ParseFiles("edit.html")
+	renderTemplate(w, "edit", p)
+}
+
+func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
+	t, _ := template.ParseFiles(tmpl + ".html")
 	t.Execute(w, p)
 }
 
