@@ -2,7 +2,7 @@ package main
 
 import (
 	"encoding/json"
-	//"fmt"
+	"fmt"
 	"log"
 	//"os"
 )
@@ -16,6 +16,28 @@ type Message struct {
 var m Message
 var mu Message
 var mi Message
+
+func printInterfaceData(i interface{}) {
+
+	mi := i.(map[string]interface{})
+	log.Printf("%s", mi)
+
+	for k, v := range mi {
+		switch vv := v.(type) {
+		case string:
+			fmt.Println(k, "is string", vv)
+		case int:
+			fmt.Println(k, "is int", vv)
+		case []interface{}:
+			fmt.Println(k, "is an array:")
+			for i, u := range vv {
+				fmt.Println(i, u)
+			}
+		default:
+			fmt.Println(k, "is of a type I don't know how to handle")
+		}
+	}
+}
 
 func main() {
 	m := Message{"Alice", "Hello", 1294706395881547000}
@@ -35,10 +57,11 @@ func main() {
 	}
 
 	// Decoding to interface
-	var inter interface{}
-	err_in := json.Unmarshal(b, &inter)
+	var i interface{}
+	err_in := json.Unmarshal(b, &i)
 	if err_in == nil {
-		log.Printf("%s", inter)
+		log.Printf("%s", i)
 	}
 
+	printInterfaceData(i)
 }
