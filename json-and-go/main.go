@@ -2,7 +2,7 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
+	//"fmt"
 	"log"
 	//"os"
 )
@@ -13,28 +13,71 @@ type Message struct {
 	Time int64
 }
 
-var m Message
-var mu Message
-var mi Message
+type FamilyMember struct {
+	Name    string
+	Age     int
+	Parents []string
+}
+
+var m_new Message
+var i interface{}
+
+func encodeMessage(m Message) []byte {
+	log.Print("# Encoding Message")
+	b, err := json.Marshal(m)
+	if err == nil {
+		log.Printf("%s", b)
+		//os.Stdout.Write(b)
+	}
+	return b
+}
+
+func decodeMessageStruct(b []byte) {
+	log.Print("# Decoding Message to struct")
+	err := json.Unmarshal(b, &m_new)
+	if err == nil {
+		log.Printf("%s", m_new.Name)
+	}
+}
+
+func decodeMessageInterface(b []byte) {
+	log.Print("# Decoding Message to interface")
+	err := json.Unmarshal(b, &i)
+	if err == nil {
+		log.Printf("%s", i)
+		printInterfaceData(i)
+	}
+}
+
+func decodeFamilyMemberInterface(b []byte) {
+	log.Print("# Decoding FamilyMember to interface")
+	//var fm FamilyMember
+	//err_fm := json.Unmarshal(by, &fm)
+	err := json.Unmarshal(b, &i)
+	if err == nil {
+		//log.Printf("%s", fm)
+		log.Printf("%s", i)
+		printInterfaceData(i)
+	}
+}
 
 func printInterfaceData(i interface{}) {
+	log.Print("# Prinitng interface data")
 
-	mi := i.(map[string]interface{})
-	log.Printf("%s", mi)
-
-	for k, v := range mi {
+	ma := i.(map[string]interface{})
+	for k, v := range ma {
 		switch vv := v.(type) {
 		case string:
-			fmt.Println(k, "is string", vv)
+			log.Print(k, " is string ", vv)
 		case int:
-			fmt.Println(k, "is int", vv)
+			log.Print(k, " is int ", vv)
 		case []interface{}:
-			fmt.Println(k, "is an array:")
+			log.Print(k, " is an array: ")
 			for i, u := range vv {
-				fmt.Println(i, u)
+				log.Print(i, " ", u)
 			}
 		default:
-			fmt.Println(k, "is of a type I don't know how to handle")
+			log.Print(k, " is of a type I don't know how to handle")
 		}
 	}
 }
@@ -42,26 +85,12 @@ func printInterfaceData(i interface{}) {
 func main() {
 	m := Message{"Alice", "Hello", 1294706395881547000}
 
-	// Encode
-	b, err_ma := json.Marshal(m)
-	if err_ma == nil {
-		log.Printf("%s", b)
-		//os.Stdout.Write(b)
-	}
+	bm := encodeMessage(m)
 
-	// Decode to struct
-	err_um := json.Unmarshal(b, &mu)
+	decodeMessageStruct(bm)
+	decodeMessageInterface(bm)
 
-	if err_um == nil {
-		log.Printf("%s", mu.Name)
-	}
+	bfm := []byte(`{"Name":"Wednesday","Age":6,"Parents":["Gomez","Morticia"]}`)
+	decodeFamilyMemberInterface(bfm)
 
-	// Decoding to interface
-	var i interface{}
-	err_in := json.Unmarshal(b, &i)
-	if err_in == nil {
-		log.Printf("%s", i)
-	}
-
-	printInterfaceData(i)
 }
