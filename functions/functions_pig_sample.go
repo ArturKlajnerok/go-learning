@@ -15,6 +15,9 @@ type score struct {
 	player, opponent, thisTurn int
 }
 
+// An action transitions stochastically to a resulting score.
+type action func(current score) (result score, turnIsOver bool)
+
 func main() {
 	fmt.Printf("Hello pig")
 }
