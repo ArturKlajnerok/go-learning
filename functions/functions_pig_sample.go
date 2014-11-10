@@ -36,12 +36,42 @@ func stay(s score) (score, bool) {
 	return score{s.opponent, s.player + s.thisTurn, 0}, true
 }
 
-func main() {
-	var s score
-	s, end := roll(s)
-	fmt.Printf("Hello pig")
-	if !end {
-		fmt.Printf("%i", s.thisTurn)
-	}
+// A strategy chooses an action for any given score.
+type strategy func(score) action
 
+// stayAtK returns a strategy that rolls until thisTurn is at least k, then stays.
+func stayAtK(k int) strategy {
+	return func(s score) action {
+		if s.thisTurn >= k {
+			return stay
+		}
+		return roll
+	}
+}
+
+// play simulates a Pig game and returns the winner (0 or 1).
+func play(strategy0, strategy1 strategy) int {
+	strategies := []strategy{strategy0, strategy1}
+	var s score
+	var turnIsOver bool
+	currentPlayer := rand.Intn(2) // Randomly decide who plays first
+	for s.player+s.thisTurn < win {
+		action := strategies[currentPlayer](s)
+		s, turnIsOver = action(s)
+		if turnIsOver {
+			currentPlayer = (currentPlayer + 1) % 2
+		}
+	}
+	return currentPlayer
+}
+
+func main() {
+	fmt.Println("Hello pig")
+	strategies := make([]strategy, win)
+	for k := range strategies {
+		fmt.Println("%i", k)
+		strategies[k] = stayAtK(k + 1)
+	}
+	w := play(strategies[0], strategies[1])
+	fmt.Println("winner: %i", w)
 }
