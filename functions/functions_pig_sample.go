@@ -65,13 +65,54 @@ func play(strategy0, strategy1 strategy) int {
 	return currentPlayer
 }
 
+// roundRobin simulates a series of games between every pair of strategies.
+func roundRobin(strategies []strategy) ([]int, int) {
+	wins := make([]int, len(strategies))
+	for i := 0; i < len(strategies); i++ {
+		for j := i + 1; j < len(strategies); j++ {
+			for k := 0; k < gamesPerSeries; k++ {
+				winner := play(strategies[i], strategies[j])
+				if winner == 0 {
+					wins[i]++
+				} else {
+					wins[j]++
+				}
+			}
+		}
+	}
+	gamesPerStrategy := gamesPerSeries * (len(strategies) - 1) // no self play
+	return wins, gamesPerStrategy
+}
+
+// ratioString takes a list of integer values and returns a string that lists
+// each value and its percentage of the sum of all values.
+// e.g., ratios(1, 2, 3) = "1/6 (16.7%), 2/6 (33.3%), 3/6 (50.0%)"
+func ratioString(vals ...int) string {
+	total := 0
+	for _, val := range vals {
+		total += val
+	}
+	s := ""
+	for _, val := range vals {
+		if s != "" {
+			s += ", "
+		}
+		pct := 100 * float64(val) / float64(total)
+		s += fmt.Sprintf("%d/%d (%0.1f%%)", val, total, pct)
+	}
+	return s
+}
+
 func main() {
 	fmt.Println("Hello pig")
 	strategies := make([]strategy, win)
 	for k := range strategies {
-		fmt.Println("%i", k)
 		strategies[k] = stayAtK(k + 1)
 	}
-	w := play(strategies[0], strategies[1])
-	fmt.Println("winner: %i", w)
+	wins, games := roundRobin(strategies)
+
+	for k := range strategies {
+		fmt.Printf("Wins, losses staying at k =% 4d: %s\n",
+			k+1, ratioString(wins[k], games-wins[k]))
+	}
 }
