@@ -5,6 +5,27 @@ import (
 	"testing"
 )
 
+var translateTests = []struct {
+	in  string
+	out string
+}{
+	{
+		in:  "dog",
+		out: "ogday",
+	},
+	{
+		in:  "cat",
+		out: "atcay",
+	},
+	{
+		in:  "hat",
+		out: "athay",
+	},
+}
+
 func TestTranslate(t *testing.T) {
-	assert.Equal(t, "test", "test")
+	for i, test := range translateTests {
+		actual := Translate(test.in)
+		assert.Equal(t, test.out, actual)
+	}
 }
