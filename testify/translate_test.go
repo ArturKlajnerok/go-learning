@@ -26,6 +26,6 @@ var translateTests = []struct {
 func TestTranslate(t *testing.T) {
 	for i, test := range translateTests {
 		actual := Translate(test.in)
-		assert.Equal(t, test.out, actual)
+		assert.Equal(t, test.out, actual, "Test %d", i)
 	}
 }
