@@ -1,7 +1,10 @@
 package main
 
-import "testing"
+import (
+	"github.com/stretchr/testify/assert"
+	"testing"
+)
 
 func TestTranslate(t *testing.T) {
-	t.Error("This failed")
+	assert.Equal(t, "test", "test")
 }
