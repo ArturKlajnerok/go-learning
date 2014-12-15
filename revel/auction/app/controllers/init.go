@@ -1,6 +1,13 @@
 package controllers
 
-import "github.com/revel/revel"
+import (
+	"database/sql"
+	"fmt"
+	"github.com/coopernurse/gorp"
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/revel/revel"
+	"strings"
+)
 
 func init() {
 	revel.InterceptMethod((*GorpController).Begin, revel.BEFORE)
@@ -36,4 +43,16 @@ func getConnectionString() string {
 	}
 	return fmt.Sprintf("%s:%s@%s([%s]:%s)/%s%s",
 		user, pass, protocol, host, port, dbname, dbargs)
+}
+
+var InitDb func() = func() {
+	connectionString := getConnectionString()
+	if db, err := sql.Open("mysql", connectionString); err != nil {
+		revel.ERROR.Fatal(err)
+	} else {
+		Dbm = &gorp.DbMap{
+			Db:      db,
+			Dialect: gorp.MySQLDialect{"InnoDB", "UTF8"}}
+	}
+
 }
