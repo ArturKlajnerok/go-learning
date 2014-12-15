@@ -1,0 +1,5 @@
+GET     /item/:id   BidItemCtrl.Get
+POST    /item       BidItemCtrl.Add
+PUT     /item/:id   BidItemCtrl.Update
+DELETE  /item/:id   BidItemCtrl.Delete
+GET     /items      BidItemCtrl.List
