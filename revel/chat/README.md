@@ -1,18 +1,13 @@
-# Welcome to Revel
+# Revel Chat
 
 ## Getting Started
 
-A high-productivity web framework for the [Go language](http://www.golang.org/).
-
 ### Start the web server:
 
-    revel run myapp
+    revel run github.com/ArturKlajnerok/go-samples/revel/chat
 
-   Run with <tt>--help</tt> for options.
+   Go to http://localhost:9000/
 
-### Go to http://localhost:9000/ and you'll see:
-
-"It works"
 
 ### Description of Contents
 
@@ -68,8 +63,3 @@ test
 * The [Revel guides](http://revel.github.io/manual/index.html).
 * The [Revel sample apps](http://revel.github.io/samples/index.html).
 * The [API documentation](http://revel.github.io/docs/godoc/index.html).
-
-## Contributing
-We encourage you to contribute to Revel! Please check out the [Contributing to Revel
-guide](https://github.com/revel/revel/blob/master/CONTRIBUTING.md) for guidelines about how
-to proceed. [Join us](https://groups.google.com/forum/#!forum/revel-framework)!
