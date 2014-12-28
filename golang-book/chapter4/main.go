@@ -30,8 +30,8 @@ func main() {
 	x5 := 5
 	fmt.Println(x5)
 
-	const c string = "Constant"
-	fmt.Println(c)
+	const con string = "Constant"
+	fmt.Println(con)
 
 	d := a + b + c
 	fmt.Println(d)
