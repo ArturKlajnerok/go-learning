@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"os"
 )
 
@@ -27,4 +28,12 @@ func main() {
 
 	str := string(bs)
 	fmt.Println(str)
+
+	// shoreter read fle
+	bs2, err := ioutil.ReadFile("test.txt")
+	if err != nil {
+		return
+	}
+	str2 := string(bs2)
+	fmt.Println(str2)
 }
