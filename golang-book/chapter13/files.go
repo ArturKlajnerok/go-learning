@@ -29,11 +29,21 @@ func main() {
 	str := string(bs)
 	fmt.Println(str)
 
-	// shoreter read fle
+	// shorter read fle
 	bs2, err := ioutil.ReadFile("test.txt")
 	if err != nil {
 		return
 	}
 	str2 := string(bs2)
 	fmt.Println(str2)
+
+	// create file
+	file2, err := os.Create("test.txt")
+	if err != nil {
+		// handle the error here
+		return
+	}
+	defer file2.Close()
+
+	file2.WriteString("Go new test")
 }
