@@ -1,0 +1,18 @@
+hash: fc4be46bd5664d371bcf49688e747a21697ccecfdaf56d9f3b5089894ac8b04f
+updated: 2015-12-31T03:11:56.642291375+01:00
+imports:
+- name: github.com/arschles/testsrv
+  version: c2ffd03d833e0d7533b4e6e3dc78df1ad633427d
+- name: github.com/google/go-github
+  version: c2ffd03d833e0d7533b4e6e3dc78df1ad633427d
+  subpackages:
+  - /github
+- name: github.com/google/go-querystring
+  version: c2ffd03d833e0d7533b4e6e3dc78df1ad633427d
+  subpackages:
+  - /query
+- name: github.com/gorilla/context
+  version: c2ffd03d833e0d7533b4e6e3dc78df1ad633427d
+- name: github.com/gorilla/mux
+  version: c2ffd03d833e0d7533b4e6e3dc78df1ad633427d
+devImports: []
