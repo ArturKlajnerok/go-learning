@@ -77,6 +77,23 @@ func GetInstance5() *singleton {
 	return instance
 }
 
+// Idiomatic initialized singleton
+type logger struct {
+	Timestamp int
+}
+
+func (l *logger) time() {
+	fmt.Println(l.Timestamp)
+}
+
+var log = logger{Timestamp: 123}
+
+func Log(s string) {
+	fmt.Println(s)
+	log.time()
+}
+
 func main() {
 	fmt.Println("Hello singleton")
+	Log("hi")
 }
