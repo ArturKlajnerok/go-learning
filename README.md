@@ -1,4 +1,11 @@
-Learning Go
-==========
+# Learning Go
 
-Sample applications to learn yourself Go Programming Language
+Sample resources to learn yourself Go Programming Language
+
+### Books :
+
+* https://github.com/golang/go/wiki/Books
+
+### Wikis :
+
+* https://github.com/golang/go/wiki
